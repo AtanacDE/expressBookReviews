@@ -33,8 +33,8 @@ public_users.get('/',function (req, res) {
     }, 3000);
   });
 
-  myPromise.then((booksList) => {
-    res.send(JSON.stringify(booksList, null, 4));
+  myPromise.then((data) => {
+    res.send(JSON.stringify(data, null, 4));
   });
 });
 
@@ -49,8 +49,8 @@ public_users.get('/isbn/:isbn',function (req, res) {
     }, 3000);
   })
 
-  myPromise.then((bookByISBN) => {
-    res.send(books[isbn]);
+  myPromise.then((data) => {
+    res.send(data[isbn]);
   })
  });
   
@@ -58,16 +58,34 @@ public_users.get('/isbn/:isbn',function (req, res) {
 public_users.get('/author/:author',function (req, res) {
   //Write your code here
   const author = req.params.author;
-  let booksByAuthor = Object.values(books).filter(book => book.author.toLowerCase() === author.toLowerCase());
-  res.send(booksByAuthor);
+
+  let myPromise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve(books)
+    }, 3000);
+  })
+
+  myPromise.then((data) => {
+    let booksByAuthor = Object.values(data).filter(book => book.author.toLowerCase() === author.toLowerCase());
+    res.send(booksByAuthor);
+  })
 });
 
 // Get all books based on title
 public_users.get('/title/:title',function (req, res) {
   //Write your code here
   const title = req.params.title;
-  let booksByTitle = Object.values(books).filter(book => book.title.toLowerCase() === title.toLowerCase());
-  res.send(booksByTitle);
+
+  let myPromise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve(books)
+    }, 3000);
+  })
+
+  myPromise.then((data) => {
+    let booksByTitle = Object.values(data).filter(book => book.title.toLowerCase() === title.toLowerCase());
+    res.send(booksByTitle);
+  })
 });
 
 //  Get book review
