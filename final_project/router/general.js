@@ -42,7 +42,16 @@ public_users.get('/',function (req, res) {
 public_users.get('/isbn/:isbn',function (req, res) {
   //Write your code here
   const isbn = req.params.isbn;
-  res.send(books[isbn]);
+
+  let myPromise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve(books)
+    }, 3000);
+  })
+
+  myPromise.then((bookByISBN) => {
+    res.send(books[isbn]);
+  })
  });
   
 // Get book details based on author
